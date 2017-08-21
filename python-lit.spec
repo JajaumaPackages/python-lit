@@ -10,7 +10,7 @@
 
 Name: python-%{srcname}
 Version: 0.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 BuildArch: noarch
 
 License: NCSA
@@ -63,7 +63,9 @@ lit is a tool used by the LLVM project for executing its test suites.
 
 # Strip out #!/usr/bin/env python
 sed -i -e '1{\@^#!/usr/bin/env python@d}' %{buildroot}%{python2_sitelib}/%{srcname}/*.py
+%if 0%{?with_python3}
 sed -i -e '1{\@^#!/usr/bin/env python@d}' %{buildroot}%{python3_sitelib}/%{srcname}/*.py
+%endif
 
 %check
 %{__python2} setup.py test
@@ -90,6 +92,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Tue Aug 22 2017 Jajauma's Packages <jajauma@yandex.ru> - 0.5.0-3
+- Skip python3 on RHEL
+
 * Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.5.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
