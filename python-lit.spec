@@ -1,3 +1,4 @@
+%global snapshot .svn20170913.r313153
 %global srcname lit
 
 %if 0%{?fedora}
@@ -9,15 +10,18 @@
 %{!?py2_install: %global py2_install %{expand: CFLAGS="%{optflags}" %{__python2} setup.py %{?py_setup_args} install -O1 --skip-build --root %{buildroot}}}
 
 Name: python-%{srcname}
-Version: 0.5.0
-Release: 3%{?dist}
+Version: 0.6.0dev
+Release: 1%{?snapshot}%{?dist}
 BuildArch: noarch
 
 License: NCSA
 Group: Development/Languages
 Summary: Tool for executing llvm test suites
 URL: https://pypi.python.org/pypi/lit
-Source0: https://pypi.python.org/packages/5b/a0/dbed2c8dfb220eb9a5a893257223cd0ff791c0fbc34ce2f1a957fa4b6c6f/lit-0.5.0.tar.gz
+# svn checkout http://llvm.org/svn/llvm-project/llvm/trunk/utils/lit
+# cd lit
+# python setup.py sdist --formats=gztar
+Source0: lit-%{version}.tar.gz
 
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
@@ -92,6 +96,9 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
+* Wed Sep 13 2017 Jajauma's Packages <jajauma@yandex.ru> - 0.6.0dev-1.svn20170913.r313153
+- Update to latest svn snapshot
+
 * Tue Aug 22 2017 Jajauma's Packages <jajauma@yandex.ru> - 0.5.0-3
 - Skip python3 on RHEL
 
